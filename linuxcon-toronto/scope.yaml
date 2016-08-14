@@ -16,7 +16,7 @@ items:
       spec:
         containers:
         - name: weavescope-app
-          image: albanc/scope:krnowak-tcd
+          image: albanc/scope:alban-toronto-3
           args:
           - --no-probe
           ports:
@@ -51,7 +51,7 @@ items:
         hostNetwork: true
         containers:
         - name:  weavescope-probe
-          image: albanc/scope:krnowak-tcd
+          image: albanc/scope:alban-toronto-3
           args:
           - --no-app
           - --probe.docker.bridge=docker0
@@ -70,21 +70,21 @@ items:
 - apiVersion: v1
   kind: ReplicationController
   metadata:
-    name: weavescope-tcd-plugin
+    name: weavescope-traffic-control-plugin
     labels:
-      k8s-app:  weavescope-tcd-plugin
+      k8s-app:  weavescope-traffic-control-plugin
   spec:
     template:
       metadata:
-        name:  weavescope-tcd-plugin
+        name:  weavescope-traffic-control-plugin
         labels:
-          k8s-app:  weavescope-tcd-plugin
+          k8s-app:  weavescope-traffic-control-plugin
       spec:
         hostPID: true
         hostNetwork: true
         containers:
-        - name:  weavescope-tcd-plugin
-          image: albanc/weavescope-tcd-plugin:test001
+        - name:  weavescope-traffic-control-plugin
+          image: albanc/weavescope-traffic-control-plugin:alban-toronto-3
           securityContext:
             privileged: true
           volumeMounts:
