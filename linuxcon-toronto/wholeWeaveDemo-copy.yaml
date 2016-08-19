@@ -208,16 +208,16 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: new-front-end
+  name: front-end-v2
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: new-front-end
+        name: front-end-v2
     spec:
       containers:
-      - name: new-front-end
+      - name: front-end-v2
         image: albanc/weaveworksdemos-front-end:2016-08-14-v2
         resources:
           requests:
@@ -229,17 +229,17 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: new-front-end
+  name: front-end-v2
   labels:
-    name: new-front-end
+    name: front-end-v2
 spec:
   ports:
   - port: 80
     targetPort: 8079
   selector:
-    name: new-front-end
+    name: front-end-v2
   clusterIP: 10.3.0.32
----  
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
