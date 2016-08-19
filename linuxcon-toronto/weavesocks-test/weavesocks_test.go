@@ -25,8 +25,8 @@ var _ = Describe("UserLogin", func() {
 
 	It("should give user feedback", func() {
 		By("go to homepage", func() {
-			Expect(page.Navigate("http://localhost:9101/")).To(Succeed())
-			Expect(page).To(HaveURL("http://localhost:9101/"))
+			Expect(page.Navigate("http://localhost:9102/")).To(Succeed())
+			Expect(page).To(HaveURL("http://localhost:9102/"))
 		})
 
 		By("login", func() {
@@ -43,7 +43,7 @@ var _ = Describe("UserLogin", func() {
 			time.Sleep(time.Second)
 			Expect(page.Find(".fa-sign-in").Click()).To(Succeed())
 
-			Expect(page).To(HavePopupText("Logged in as user"))
+			Eventually(page).Should(HavePopupText("Logged in as user"))
 			Expect(page.ConfirmPopup()).To(Succeed())
 
 			Eventually(page.Find("#howdy"), "10s").Should(HaveText("Logged in as User Name"))
@@ -52,7 +52,7 @@ var _ = Describe("UserLogin", func() {
 
 		By("go to catalogue", func() {
 			Expect(page.FindByLink("Catalogue").Click()).To(Succeed())
-			Expect(page).To(HaveURL("http://localhost:9101/category.html"))
+			Eventually(page, "10s").Should(HaveURL("http://localhost:9102/category.html"))
 		})
 
 		By("add item in the cart", func() {
@@ -64,6 +64,9 @@ var _ = Describe("UserLogin", func() {
 		By("go to cart", func() {
 			Expect(page.Find("#numItemsInCart").Click()).To(Succeed())
 			Eventually(page.Find("#basket"), "10s").Should(MatchText("Shopping cart"))
+
+			Eventually(page.FindByXPath("//tbody[@id='cart-list']/tr[1]/td[2]"), "1s").Should(HaveText("Loading..."))
+			Eventually(page.FindByXPath("//tbody[@id='cart-list']/tr[last()]/td[2]/a"), "1s").Should(HaveText("Holy"))
 		})
 
 		// Give some time to follow the demo
